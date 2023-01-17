@@ -1,0 +1,14 @@
+
+.placeholder td {
+  border-top: 0px;
+}
+
+input.hitpoints {
+    width: 100%;
+    margin: 0px;
+}
+
+td {
+  overflow: hidden; 
+  text-overflow: ellipsis
+}

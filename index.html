@@ -1,186 +1,224 @@
-{% extends "base.html" %}
-{% load static %}
-{% block include %}
-  <link rel="stylesheet" type="text/css" href="{% static "css/initiative_tracker.css" %}">
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="css/initiative_tracker.css">
 
-{% block content %}
-  <div class="mt-5 container">
-    <div class=row>
-      <div class="col-md-6">
-        <h3>
-          New PJ
-        </h3>
-        <form id="pjForm">
-          <div class="form-group">
-            <label for="pjNameInput">Name</label>
-            <input type="text" class="form-control" id="pjNameInput" placeholder="Enter name">
-          </div>
-          <div class="form-group">
-            <label for="pjInitiativeTotal">Initiative Total</label>
-            <input type="number" class="form-control" id="pjInitiativeTotal">
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-success">Submit</button>
-          </div>
-        </form>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/table.css">
+
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- navbar  -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Jeekiii</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link">Initiative Tracker</a>
+          </li>
+        </ul>
       </div>
-      <div class="col-md-6" id="test">
-        <h3>
-          New PNJ
-        </h3>
-        <form id="pnjForm">
-          <div class="form-group">
-            <label for="pnjNameInput">Name</label>
-            <input type="text" class="form-control" id="pnjNameInput" placeholder="Enter name">
+    </nav>
+
+    <div id="content">
+
+      <div class="mt-5 container">
+        <div class=row>
+          <div class="col-md-6">
+            <h3>
+              New PJ
+            </h3>
+            <form id="pjForm">
+              <div class="form-group">
+                <label for="pjNameInput">Name</label>
+                <input type="text" class="form-control" id="pjNameInput" placeholder="Enter name">
+              </div>
+              <div class="form-group">
+                <label for="pjInitiativeTotal">Initiative Total</label>
+                <input type="number" class="form-control" id="pjInitiativeTotal">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="pnjInitiativeBonus">Initiative Bonus</label>
-            <input type="number" class="form-control" id="pnjInitiativeBonus">
+          <div class="col-md-6" id="test">
+            <h3>
+              New PNJ
+            </h3>
+            <form id="pnjForm">
+              <div class="form-group">
+                <label for="pnjNameInput">Name</label>
+                <input type="text" class="form-control" id="pnjNameInput" placeholder="Enter name">
+              </div>
+              <div class="form-group">
+                <label for="pnjInitiativeBonus">Initiative Bonus</label>
+                <input type="number" class="form-control" id="pnjInitiativeBonus">
+              </div>
+              <div class="form-group">
+                <label for="pnjNumber">Number of PNJs</label>
+                <input type="number" max="100" class="form-control" id="pnjNumber">
+              </div>
+              <div class="form-group">
+                <label for="pnjHp">Hit Points of PNJs</label>
+                <input type="number" class="form-control" id="pnjHp">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="pnjNumber">Number of PNJs</label>
-            <input type="number" max="100" class="form-control" id="pnjNumber">
+        </div>
+        <div class="row">
+          <div class="col-6 text-center py-5">
+            <button type="button" class="btn btn-primary" id="orderTables"> order the table </button>
           </div>
-          <div class="form-group">
-            <label for="pnjHp">Hit Points of PNJs</label>
-            <input type="number" class="form-control" id="pnjHp">
+          <div class="col-6 text-center py-5">
+            <button type="button" class="btn btn-primary" id="resetTables"> reset the table </button>
           </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-success">Submit</button>
-          </div>
-        </form>
+        </div>
+        <div class="row container-fluid">
+          <table class="table" id="table">
+            <h2>
+              Initiative turns
+            </h2>
+            <thead>
+              <tr class="d-flex">
+                <th class="col-lg-5 col-3">Name</th>
+                <th class="col-lg-3">Total</th>
+                <th class="col-lg-3 col-5">HP</th>
+                <th class="col-1"></th>
+              </tr>
+            </thead>
+            <tbody class="drag-and-droppable" id="initiativeTable">
+              <tr class=placeholder>
+                <td>
+                  <div> </div>
+                </td>
+              <tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row container-fluid">
+          <h2>
+            Delaying players
+          </h2>
+          <table class="table">
+            <thead>
+              <tr class="d-flex">
+                <th class="col-lg-5 col-3">Name</th>
+                <th class="col-lg-3">Total</th>
+                <th class="col-lg-3 col-5">HP</th>
+                <th class="col-1"></th>
+              </tr>
+            </thead>
+            <tbody class="drag-and-droppable" id="delayingTable">
+              <tr class=placeholder>
+                <td>
+                  <div> </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-6 text-center py-5">
-        <button type="button" class="btn btn-primary" id="orderTables"> order the table </button>
-      </div>
-      <div class="col-6 text-center py-5">
-        <button type="button" class="btn btn-primary" id="resetTables"> reset the table </button>
-      </div>
-    </div>
-    <div class="row container-fluid">
-      <table class="table" id="table">
-        <h2>
-          Initiative turns
-        </h2>
-        <thead>
-          <tr class="d-flex">
-            <th class="col-lg-5 col-3">Name</th>
-            <th class="col-lg-3">Total</th>
-            <th class="col-lg-3 col-5">HP</th>
-            <th class="col-1"></th>
-          </tr>
-        </thead>
-        <tbody class="drag-and-droppable" id="initiativeTable">
-          <tr class=placeholder>
-            <td> <div> </div> </td>
-          <tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row container-fluid">
-      <h2>
-        Delaying players
-      </h2>
-      <table class="table">
-        <thead>
-          <tr class="d-flex">
-            <th class="col-lg-5 col-3">Name</th>
-            <th class="col-lg-3">Total</th>
-            <th class="col-lg-3 col-5">HP</th>
-            <th class="col-1"></th>
-          </tr>
-        </thead>
-        <tbody class="drag-and-droppable" id="delayingTable">
-          <tr class=placeholder>
-            <td> <div> </div> </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
+</body>
+</html>
 
-{% endblock %}
 
-{% block script %}
-  <script type="text/javascript">
-    function onListChanged() {
-      $('tbody').each(function() {
-        if($(this).children().length == 2) {
-          $(this).find('.placeholder').show()
-        } else {
-          $(this).find('.placeholder').hide()
-        }
-      });
-    }
-    function getTableRow(initiativeTotal, name, hitpoints) {
-      return "<tr class=\"ui-sortable-handle initiativeRow d-flex\">"
-        + "<td class=\"col-lg-5 col-3\">" + name + "</t²d>"
-        + "<td class=\"initiativeTotal col-3\">" + initiativeTotal + "</td>"
-        + "<td class=\"col-lg-3 col-5\"> <input class=\"hitpoints\" value="+hitpoints+"></input> </td>"
-        + "<td class=\"col-1\">"
-        + "<button type=\"button\" class=\"close delete-row\">"
-        + "<span aria-hidden=\"true\">\&times;</span>"
-        + "</button>"
-        + "</td>"
-        + "</tr>"
-    }
 
-    $( document ).ready(function() {
-      $('placeholder').hide();
-      $('tbody.drag-and-droppable').sortable({
-        connectWith: '.drag-and-droppable',
-        cancel: ".placeholder, :input, button,.contenteditable",
-        beforeStop: function(event, ui) {
-          onListChanged();
-        },
-      });
 
-      $('#pnjForm').submit(function(jqEvt) {
-        $('#initiativeTable').find('.placeholder').hide();
-        jqEvt.preventDefault();
-        name = $('#pnjNameInput').val()
-        initiativeBonus = $('#pnjInitiativeBonus').val()
-        pnjNumber = $('#pnjNumber').val()
-        pnjHp = $('#pnjHp').val()
-        for(var i = 0; i < pnjNumber; i++) {
-          initiativeTotal = parseInt(initiativeBonus) + Math.floor(Math.random() * 20) + 1
-          $('#initiativeTable').append(getTableRow(initiativeTotal, name + '_' + (i+1) , pnjHp));
-        }
-        $("#initiativeTable").sortable('refresh');
-        $('#pnjForm').trigger("reset");
-        $('#pnjNameInput').focus()
-      });
 
-      $('#pjForm').submit(function(jqEvt) {
-        $('#initiativeTable').find('.placeholder').hide();
-        jqEvt.preventDefault();
-        name = $('#pjNameInput').val()
-        initiativeTotal = $('#pjInitiativeTotal').val()
-        $('#initiativeTable').append(getTableRow(initiativeTotal, name, ""));
-        $("#initiativeTable").sortable('refresh');
-        $('#pjForm').trigger("reset");
-        $('#pjNameInput').focus()
-      });
-
-      $('#resetTables').click(function() {
-        $('#initiativeTable').find('.initiativeRow').remove()
-        $('#delayingTable').find('.initiativeRow').remove()
-      });
-
-      $('#orderTables').click(function() {
-        $('#initiativeTable').find('.initiativeRow').sort(function(a, b) {
-          return +$(b).find('.initiativeTotal').text()-$(a).find('.initiativeTotal').text();
-        })
-        .appendTo($('#initiativeTable'));
-      });
-
-      $(document).on('click', '.delete-row', function() {
-        $(this).parents(".initiativeRow").remove();
-      });
-
+<script type="text/javascript">
+  function onListChanged() {
+    $('tbody').each(function () {
+      if ($(this).children().length == 2) {
+        $(this).find('.placeholder').show()
+      } else {
+        $(this).find('.placeholder').hide()
+      }
     });
-  </script>
-{% endblock %}
+  }
+  function getTableRow(initiativeTotal, name, hitpoints) {
+    return "<tr class=\"ui-sortable-handle initiativeRow d-flex\">"
+      + "<td class=\"col-lg-5 col-3\">" + name + "</t²d>"
+      + "<td class=\"initiativeTotal col-3\">" + initiativeTotal + "</td>"
+      + "<td class=\"col-lg-3 col-5\"> <input class=\"hitpoints\" value=" + hitpoints + "></input> </td>"
+      + "<td class=\"col-1\">"
+      + "<button type=\"button\" class=\"close delete-row\">"
+      + "<span aria-hidden=\"true\">\&times;</span>"
+      + "</button>"
+      + "</td>"
+      + "</tr>"
+  }
+
+  $(document).ready(function () {
+    $('placeholder').hide();
+    $('tbody.drag-and-droppable').sortable({
+      connectWith: '.drag-and-droppable',
+      cancel: ".placeholder, :input, button,.contenteditable",
+      beforeStop: function (event, ui) {
+        onListChanged();
+      },
+    });
+
+    $('#pnjForm').submit(function (jqEvt) {
+      $('#initiativeTable').find('.placeholder').hide();
+      jqEvt.preventDefault();
+      name = $('#pnjNameInput').val()
+      initiativeBonus = $('#pnjInitiativeBonus').val()
+      pnjNumber = $('#pnjNumber').val()
+      pnjHp = $('#pnjHp').val()
+      for (var i = 0; i < pnjNumber; i++) {
+        initiativeTotal = parseInt(initiativeBonus) + Math.floor(Math.random() * 20) + 1
+        $('#initiativeTable').append(getTableRow(initiativeTotal, name + '_' + (i + 1), pnjHp));
+      }
+      $("#initiativeTable").sortable('refresh');
+      $('#pnjForm').trigger("reset");
+      $('#pnjNameInput').focus()
+    });
+
+    $('#pjForm').submit(function (jqEvt) {
+      $('#initiativeTable').find('.placeholder').hide();
+      jqEvt.preventDefault();
+      name = $('#pjNameInput').val()
+      initiativeTotal = $('#pjInitiativeTotal').val()
+      $('#initiativeTable').append(getTableRow(initiativeTotal, name, ""));
+      $("#initiativeTable").sortable('refresh');
+      $('#pjForm').trigger("reset");
+      $('#pjNameInput').focus()
+    });
+
+    $('#resetTables').click(function () {
+      $('#initiativeTable').find('.initiativeRow').remove()
+      $('#delayingTable').find('.initiativeRow').remove()
+    });
+
+    $('#orderTables').click(function () {
+      $('#initiativeTable').find('.initiativeRow').sort(function (a, b) {
+        return +$(b).find('.initiativeTotal').text() - $(a).find('.initiativeTotal').text();
+      })
+        .appendTo($('#initiativeTable'));
+    });
+
+    $(document).on('click', '.delete-row', function () {
+      $(this).parents(".initiativeRow").remove();
+    });
+
+  });
+</script>
